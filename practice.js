@@ -26,33 +26,72 @@ const calculator = (function() {
 })()
 
 const caesarCipher = (function() {
-    const alphabet = [
-        'a','b','c','d',
-        'e','f','g','h',
-        'i','j','k','l',
-        'm','n','o','p',
-        'q','r','s','t',
-        'u','v','w','x',
-        'y','z'
-    ];
-
     const cipher = (string, num) => {
         const arrString = string.split('');
         const newArr = [];
-        const newDestructedString = [];
-        arrString.forEach((char) => {
-            const index = alphabet.indexOf(char);
-            const shiftedIndex = index + num;
-            newArr.push(shiftedIndex);
+        arrString.forEach((element) => {
+            const charCode = element.charCodeAt(0);
+            let newCharCode;
+            if (charCode > 31 && charCode < 48 || 
+                charCode > 57 && charCode < 65 || 
+                charCode > 90 && charCode < 97 || 
+                charCode > 122 && charCode < 127) {
+                newArr.push(charCode);
+                return;
+            }
+            if (charCode > 64 && charCode < 91) {
+                newCharCode = (charCode - 65 + num) % 26 + 65;
+            } else if (charCode > 96 && charCode < 123) {
+                newCharCode = (charCode - 97 + num) % 26 + 97;
+            }
+            newArr.push(newCharCode);
+            console.log(newArr)
+            return;
         })
-        newArr.forEach((index) => {
-            const letter = alphabet[index];
-            newDestructedString.push(letter);
-        })
-        return newDestructedString.join('')
+        const cipheredString = String.fromCharCode(...newArr);
+        return cipheredString;
     }
-    
     return { cipher }
 })()
 
-module.exports = { practice, capitalize, reverseString, calculator, caesarCipher };
+const analyzeArray = (function() {
+    let arrayLength;
+    let arrayAverage;
+    let arrayMin;
+    let arrayMax;
+
+    const analysis = (array) => {
+        let object = {};
+        object.average = average(array);
+        object.min = min(array);
+        object.max = max(array);
+        object.length = length(array);
+     return object;
+    }
+
+    const length = (array) => {
+        arrayLength = array.length;
+        return arrayLength;
+    }
+
+    const average = (array) => {
+        const initialValue = 0;
+        const sumWithInitial = array.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+        length(array);
+        arrayAverage = sumWithInitial / arrayLength;
+        return arrayAverage;
+    }
+
+    const min = (array) => {
+        arrayMin = Math.min(...array);
+        return arrayMin;
+    }
+
+    const max = (array) => {
+        arrayMax = Math.max(...array);
+        return arrayMax;
+    }
+     return { analysis }
+})()
+
+module.exports = { practice, capitalize, reverseString, calculator, caesarCipher, analyzeArray };

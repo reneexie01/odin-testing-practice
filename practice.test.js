@@ -1,5 +1,5 @@
 const { default: expect } = require('expect');
-const { practice, capitalize, reverseString, calculator, caesarCipher } = require('./practice');
+const { practice, capitalize, reverseString, calculator, caesarCipher, analyzeArray } = require('./practice');
 
 test('Return exists', () => {
     expect(practice()).toBe('exists');
@@ -43,4 +43,13 @@ test('Case preservation for caesarCipher', () => {
 
 test('Non-alphabetical characters remained unchanged for caesarCipher', () => {
     expect(caesarCipher.cipher('Hello, World!', 3)).toBe('Khoor, Zruog!');
+})
+
+test('Analysis returns correct average, min, max, length', () => {
+    expect(analyzeArray.analysis([1,8,3,4,2,6])).toStrictEqual({
+        average: 4,
+        min: 1,
+        max: 8,
+        length: 6
+     });
 })
